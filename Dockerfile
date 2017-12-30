@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:5.6-fpm-alpine
 
 RUN apk update \
     && apk add --no-cache libxml2-dev libjpeg-turbo-dev zlib-dev libpng-dev \
@@ -10,13 +10,18 @@ RUN apk update \
                               xsl \
                               soap \
 			      sockets \ 
-	&& pecl install mcrypt-1.0.1 \
-	&& docker-php-ext-enable mcrypt \
-        && apk del libxml2-dev libjpeg-turbo-dev zlib-dev libpng-dev \
+			      mcrypt \
+	        && apk del libxml2-dev libjpeg-turbo-dev zlib-dev libpng-dev \
         libmcrypt-dev openssl-dev curl-dev libxslt-dev sqlite-dev autoconf \
 	gcc g++ libc-dev make \
     && apk add nginx supervisor libxslt libmcrypt libpng \
     && mkdir /app /logs /run/nginx
+
+# For PHP 7 add the following lines
+# FROM php:fpm-alpine
+# && pecl install mcrypt-1.0.1 \
+# && docker-php-ext-enable mcrypt \
+
 
 
 COPY supervisord.conf /etc/supervisord.conf

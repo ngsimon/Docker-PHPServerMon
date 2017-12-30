@@ -13,14 +13,15 @@ will trigger the check of the services at a user defined interval.
 To run this image you need to have a mysql server up and configured.
 You need to create the database for phpservermon before starting the app.
 
-    docker run -d -p 80:80 -e PSM_BASE_URL="" \
-                           -e PSM_DB_HOST="mysql" \
-                           -e PSM_DB_PORT="3306" \
-                           -e PSM_DB_NAME="phpservermon" \
-                           -e PSM_DB_USER="root" \
-                           -e PSM_DB_PASS="test" \
-                           -e PSM_DB_PREFIX="" \
+    docker run -d -p 80:80 -e PSM_BASE_URL= \
+                           -e PSM_DB_HOST=mysql \
+                           -e PSM_DB_PORT=3306 \
+                           -e PSM_DB_NAME=phpservermon \
+                           -e PSM_DB_USER=root \
+                           -e PSM_DB_PASS=test \
+                           -e PSM_DB_PREFIX= \
                            -e UPDATE_INTERVAL=30
+			   -e PSM_TIMEZONE=Europe/Paris
                --name phpservermon invartam/docker-phpservermon
 
 ## Application configuration
@@ -36,6 +37,7 @@ variable with the full URL to access it with http:// or https://
 * PSM_DB_PREFIX: prefix put at the beginning of the tables name.
 * UPDATE_INTERVAL: interval in second between each services status check
 (default: 30s).
+* PSM_TIMEZONE: the PHP timezone, for the list of complete timezone, please refer to http://php.net/manual/en/timezones.php
 
 # Sample docker-compose configuration
 
@@ -45,32 +47,23 @@ variable with the full URL to access it with http:// or https://
         image: mysql
         container_name: mysql
         environment:
-         - MYSQL_ROOT_PASSWORD=test
+         - MYSQL_ROOT_PASSWORD=CHANGE_ME_IM_NOT_SECURE
         expose:
           - "3306"
-
-      phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        environment:
-         - PMA_HOST=mysql
-         - PMA_USER=root
-         - PMA_PASSWORD=test
-       container_name: phpmyadmin
-       ports:
-         - "8080:80"
 
       phpservermon:
         image: invartam/docker-phpservermon
         container_name: phpservermon
         environment:
-          - PSM_BASE_URL=""
-          - PSM_DB_HOST="mysql"
-          - PSM_DB_PORT="3306"
-          - PSM_DB_NAME="phpservermon"
-          - PSM_DB_USER="root"
-          - PSM_DB_PASS="test"
-          - PSM_DB_PREFIX=""
+          - PSM_BASE_URL=
+          - PSM_DB_HOST=mysql
+          - PSM_DB_PORT=3306
+          - PSM_DB_NAME=phpservermon
+          - PSM_DB_USER=root
+          - PSM_DB_PASS=CHANGE_ME_IM_NOT_SECURE
+          - PSM_DB_PREFIX=
           - UPDATE_INTERVAL=30
+	  - PSM_TIMEZONE=Europe/Paris
         ports:
           - "8081:80"
 

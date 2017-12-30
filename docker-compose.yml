@@ -10,7 +10,7 @@ services:
       - 3306
 
   phpservermon:
-    build: .
+    image: lifenz/docker-phpservermon
     container_name: phpservermon
     depends_on:
       - mysql

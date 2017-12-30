@@ -20,9 +20,9 @@ You need to create the database for phpservermon before starting the app.
                            -e PSM_DB_USER=root \
                            -e PSM_DB_PASS=test \
                            -e PSM_DB_PREFIX= \
-                           -e UPDATE_INTERVAL=30
-			   -e PSM_TIMEZONE=Europe/Paris
-               --name phpservermon invartam/docker-phpservermon
+                           -e UPDATE_INTERVAL=30 \
+                           -e PSM_TIMEZONE=Europe/Paris \
+               --name phpservermon 
 
 ## Application configuration
 The configuration is done via environment variables passed to the container.
@@ -52,7 +52,7 @@ variable with the full URL to access it with http:// or https://
           - "3306"
 
       phpservermon:
-        image: invartam/docker-phpservermon
+        image: lifenz/docker-phpservermon
         container_name: phpservermon
         environment:
           - PSM_BASE_URL=
@@ -68,6 +68,7 @@ variable with the full URL to access it with http:// or https://
           - "8081:80"
 
 # Sources
-* Image Github: https://github.com/invartam/Docker-PHPServerMon
+* Image Github: https://github.com/lifenz/Docker-PHPServerMon
 * PHPServerMon Github: https://github.com/phpservermon/phpservermon
 * PHPServerMon website: http://www.phpservermonitor.org/
+* From the previous work: https://github.com/invartam/Docker-PHPServerMon
